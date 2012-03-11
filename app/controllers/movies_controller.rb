@@ -21,6 +21,7 @@ class MoviesController < ApplicationController
     @order = params[:order]
 
     # If no sort/filtering specified reapply remembered values and redirect_to so they appear in the URI
+    # Note issue with not being able to distinguish explicitly set empty boxes
     if @order == nil and @ratings_hash == nil then
       if session[:ratings] != nil or session[:order] != nil then
         redirect_to movies_path(:ratings => session[:ratings], :order => session[:order])
