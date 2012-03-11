@@ -7,6 +7,13 @@ class MoviesController < ApplicationController
   end
 
   def index
+    # Make sure @all_ratings is set here so the index view can use it
+    @all_ratings = Movie.all_ratings
+    # Remember sort order and filter values
+    # Should ratings be an argument instead?
+    @ratings = params[:ratings]
+#debugger
+    @order = params[:order]
     if params[:order] then
       @movies = Movie.all(:order => params[:order])
     else
