@@ -9,15 +9,36 @@ class MoviesController < ApplicationController
   def index
     # Make sure @all_ratings is set here so the index view can use it
     @all_ratings = Movie.all_ratings
+
     # Remember sort order and filter values
     # Should ratings be an argument instead?
-    @ratings = params[:ratings]
-#debugger
-    @order = params[:order]
-    if params[:order] then
-      @movies = Movie.all(:order => params[:order])
+debugger
+    if params[:ratings] then
+      @ratings = params[:ratings].keys
     else
-      @movies = Movie.all
+      # Change for remembering code?
+      @ratings = nil
+    end
+    @order = params[:order]
+
+    # Support remembering sort and filtering
+    # If no sort/filtering specified reapply remembered values and redirect_to so they appear in the URI
+    # Modify lookup to include filtering using find_by_rating (or find_all_by?, how do we handle ratings hash?, maybe combine multiple finds or do custom SQL query?)
+    if params[:order] then
+      if @ratings then
+        @movies = Movie.find(:all,
+            :conditions => ['rating IN (?)', @ratings],
+            :order => params[:order])
+      else
+        @movies = Movie.all(:order => params[:order])
+      end
+    else
+      if @ratings then
+        @movies = Movie.find(:all,
+            :conditions => ['rating IN (?)', @ratings])
+      else
+        @movies = Movie.all
+      end
     end
   end
 
