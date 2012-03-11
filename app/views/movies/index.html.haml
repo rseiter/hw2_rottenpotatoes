@@ -4,6 +4,7 @@
 -#      %th.hilite#title_header= link_to "Movie Title", movies_path(:order => :title)
 -#    = check_box_tag "ratings[#{rating}]", true, checked?(rating)
 -#      %th{:class => hilite?(:title)}= link_to "Movie Title", movies_path(:order => :title)
+-#      %th#title_header{:class => hilite?(:title)}= link_to "Movie Title", movies_path(:order => :title)
 
 %h1 All Movies
 
@@ -17,9 +18,9 @@
 %table#movies
   %thead
     %tr
-      %th#title_header{:class => hilite?(:title)}= link_to "Movie Title", movies_path(:order => :title)
+      %th{:class => hilite?(:title)}= link_to "Movie Title", movies_path(:order => :title), :id => "title_header"
       %th#rating_header= link_to "Rating", movies_path(:order => :rating)
-      %th#release_date_header{:class => hilite?(:release_date)}= link_to "Release Date", movies_path(:order => :release_date)
+      %th{:class => hilite?(:release_date)}= link_to "Release Date", movies_path(:order => :release_date), :id => "release_date_header"
       %th More Info
   %tbody
     - @movies.each do |movie|
